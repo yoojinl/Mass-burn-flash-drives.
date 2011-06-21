@@ -3,8 +3,24 @@
 
 import os, sys, time, re, commands
 import multiprocessing
+from optparse import OptionParser
 
 TIMEOUT = 3
+
+def parse_arguments():
+    parser = OptionParser("python burn.py -f device_list.txt -i file.img")
+    parser.add_option("-f", "--file", dest="devices_list",
+                      help="file with devices list, separated by new line symbol, example: sda sdb sdc.", metavar="FILE")
+
+    parser.add_option("-i", "--img", dest="img_file",
+                      help="*.img file to burn to the flash device.", metavar="FILE")
+
+    (options, args) = parser.parse_args()
+
+    if(not (options.devices_list and options.img_file)):
+        parser.error("Incorrect number of arguments, use argument --help for more information.")
+
+    return options
 
 def burn(dev_name, iso_name):
     while(True):
@@ -52,8 +68,9 @@ class bcolors:
         self.ENDC = ''
 
 if __name__ == '__main__':
-    iso_name = sys.argv[1]
-    dev_list_file = sys.argv[2]
+    args = parse_arguments()
+    iso_name = args.img_file
+    dev_list_file = args.devices_list
 
     dev_list = open(dev_list_file, 'r')
     dev_list = dev_list.readlines()
