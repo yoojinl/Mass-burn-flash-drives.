@@ -51,22 +51,6 @@ def is_connect(dev_name):
         return True
     return False
 
-class bcolors:
-    START = '\033[95m'
-    OKGREEN = '\033[92m'
-    OKBLUE = '\033[94m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-
-    def disable(self):
-        self.HEADER = ''
-        self.OKBLUE = ''
-        self.OKGREEN = ''
-        self.WARNING = ''
-        self.FAIL = ''
-        self.ENDC = ''
-
 if __name__ == '__main__':
     args = parse_arguments()
     iso_name = args.img_file
